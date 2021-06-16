@@ -35,9 +35,14 @@ public class Screen extends JPanel implements ActionListener {
     private boolean gameStart = true;
 
     private Timer timer;
+    private int score;
     private Image body;
     private Image food;
     private Image head;
+    private Image dead;
+
+    private final Color VERY_DARK_GREEN = new Color(0, 102, 0);
+    private final Color DARK_GREEN = new Color(0, 153, 0);
 
     public Screen() {
 
@@ -47,7 +52,7 @@ public class Screen extends JPanel implements ActionListener {
     private void initScreen() {
 
         addKeyListener(new TAdapter());
-        setBackground(Color.LIGHT_GRAY);
+        setBackground(DARK_GREEN);
         setFocusable(true);
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -67,10 +72,13 @@ public class Screen extends JPanel implements ActionListener {
         ImageIcon headIcon = new ImageIcon("src/main/resources/static/icons/smile.png");
         head = headIcon.getImage();
 
+        ImageIcon deadIcon = new ImageIcon("src/main/resources/static/icons/dead.png");
+        dead = deadIcon.getImage();
+
     }
 
     private void initGame() {
-
+        score = 0;
         elements = 2;
 
         for (int i = 0; i < elements; i++) {
@@ -108,7 +116,14 @@ public class Screen extends JPanel implements ActionListener {
                 }
             }
 
+            String scoreStr = "Score: " + String.valueOf(score);
+            g.setColor(Color.black);
+            g.setFont(new Font("Montserrat", Font.BOLD, 36));
+            g.drawString(scoreStr, 10, 30);
+
             Toolkit.getDefaultToolkit().sync();
+
+
 
         } else {
             gameOver(g);
@@ -117,8 +132,15 @@ public class Screen extends JPanel implements ActionListener {
 
     private void gameOver(Graphics g) {
 
+        g.drawImage(dead, WIDTH/2, HEIGHT/2, this);
+
+        String scoreStr = "Score: " + String.valueOf(score);
+        g.setColor(Color.black);
+        g.setFont(new Font("Montserrat", Font.BOLD, 36));
+        g.drawString(scoreStr, 10, 30);
+
         String msg = "Game Over";
-        Font font = new Font("Montserrat", Font.BOLD, 20);
+        Font font = new Font("Montserrat", Font.BOLD, 72);
         FontMetrics metrics = getFontMetrics(font);
 
         g.setColor(Color.RED);
@@ -131,7 +153,7 @@ public class Screen extends JPanel implements ActionListener {
 
         if ((x[0] == food_x) && (y[0] == food_y)) {
             //System.out.println("yes");
-
+            score++;
             elements++;
             locateFood();
         }
