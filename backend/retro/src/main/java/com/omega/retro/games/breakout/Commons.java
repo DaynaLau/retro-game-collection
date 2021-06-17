@@ -2,7 +2,7 @@ package com.omega.retro.games.breakout;
 
 public interface Commons {
 
-    int WIDTH = 300;
+    int WIDTH = 360;
     int HEIGHT = 400;
     int BOTTOM_EDGE = 390;
     int N_OF_BRICKS = 30;
@@ -12,5 +12,5 @@ public interface Commons {
     int INIT_BALL_Y = 355;
 
     // time (ms) between successive task executions that form game cycles
-    int PERIOD = 10;
+    int PERIOD = 1;
 }
